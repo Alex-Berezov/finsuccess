@@ -1,0 +1,23 @@
+.dashboard {
+  margin-top: 50px;
+  
+  .balance__block {
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+      .addItem {
+        margin-top: 20px;
+        display: none;
+      }
+
+      &:hover {
+
+        .addItem {
+          display: block;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
