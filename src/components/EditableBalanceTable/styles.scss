@@ -1,0 +1,31 @@
+table, th, td {
+  padding: 5px;
+  border: 1px solid gray;
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+.editableTable {
+  width: 100%;
+
+  &__block {
+    display: flex;
+
+    &-item {
+      display: flex;
+      padding: 5px;
+      border: 1px solid gray;
+
+      p {
+        
+      }
+    }
+
+    &-edits {
+      display: flex;
+    }
+  }
+}
