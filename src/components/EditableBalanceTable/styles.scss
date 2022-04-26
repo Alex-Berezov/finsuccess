@@ -12,20 +12,76 @@ table {
   width: 100%;
 
   &__block {
+    width: 100%;
+    margin-top: 10px;
+    border-bottom: 1px solid gray;
     display: flex;
+    align-items: center;
 
     &-item {
+      width: 90%;
       display: flex;
       padding: 5px;
-      border: 1px solid gray;
 
       p {
-        
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &:first-child {
+          width: 80%;
+        }
+
+        &:last-child {
+          width: 20%;
+        }
       }
     }
 
     &-edits {
+      width: 10%;
       display: flex;
+
+      img {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+
+        &:first-child {
+          margin: 0 5px;
+        }
+      }
     }
   }
+
+  .addIncomesForm {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    #incomesItem {
+      width: 88%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid gray;
+    }
+
+    .addIncomesBtn {
+      width: 9%;
+      padding: 5px;
+      border: 1px solid green;
+      border-radius: 3px;
+      background-color: green;
+      color: #ffffff;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(51, 160, 51);
+      }
+    }
+  }
+}
+
+.addIncomesItem {
+  margin-top: 30px;
 }

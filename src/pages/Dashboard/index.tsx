@@ -31,7 +31,7 @@ const Dashboard: FC = () => {
             className='addItem'
             onClick={() => setIncomeModalActive(true)}
           >
-            Добавить доход
+            Редактировать
           </button>
         </div>
         <div className="balance__block-item expenses">
@@ -63,7 +63,7 @@ const Dashboard: FC = () => {
             className='addItem'
             onClick={() => setExpensesModalActive(true)}
           >
-            Add item
+            Редактировать
           </button>
         </div>
         <div className="balance__block-item assets">
@@ -95,7 +95,7 @@ const Dashboard: FC = () => {
             className='addItem'
             onClick={() => setAssetsModalActive(true)}
           >
-            Add item
+            Редактировать
           </button>
         </div>
         <div className="balance__block-item liabilities">
@@ -127,7 +127,7 @@ const Dashboard: FC = () => {
             className='addItem'
             onClick={() => setLiabilitiesModalActive(true)}
           >
-            Add item
+            Редактировать
           </button>
         </div>
         <div className="balance__block-item balance">
