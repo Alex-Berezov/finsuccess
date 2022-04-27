@@ -7,5 +7,11 @@ export const incomesAPI = {
   },
   postIncome(newIncome: IBalance) {
     return instance.post<IBalance[]>('incomes', newIncome)
+  },
+  deleteIncome(incomeId: string | number) {
+    return instance.delete<IBalance[]>(`incomes/${incomeId}`)
+  },
+  updateIncome(incomeId: string | number, incomeName: string) {
+    return instance.patch<IBalance[]>(`incomes/${incomeId}`, { name: incomeName })
   }
 }

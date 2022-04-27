@@ -33,12 +33,7 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
           <th>Итого:</th>
           <td>
             {
-              tableData.reduce((sum, current) => {
-                if (!current.value) {
-                  return 0
-                }
-                return sum + current.value
-              }, 0)
+              tableData.reduce((sum, current) => sum + current.value, 0)
             }
           </td>
         </tr>

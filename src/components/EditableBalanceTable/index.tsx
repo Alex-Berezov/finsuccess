@@ -8,24 +8,36 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import './styles.scss'
+import useInput from './../../hooks/useInput';
 
 interface EditableBalanceTableProps {
   tableData: Array<IBalance>
-  tableTitle: string
 }
 
 interface addIncomeValues {
   incomesItem: string;
 }
 
-const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, tableTitle }) => {
+const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
   const [isAddingIncome, setIsAddingIncome] = useState(false)
+  const [isEditingItem, setIsEditingItem] = useState(false)
   const dispatch = useDispatch()
 
   const addIncome = (newIncome: IBalance) => dispatch({
     type: IncomesActionType.ADD_INCOME,
     newIncome: newIncome
   })
+
+  const deleteIncome = (incomeId: string | number) => dispatch({
+    type: IncomesActionType.DELETE_INCOME,
+    incomeId: incomeId
+  })
+
+  const handleDeleteIncomeItem = (id: string | number) => {
+    deleteIncome(id)
+  }
+
+  const { onChange, value } = useInput('')
 
   const initialValues: addIncomeValues = { incomesItem: '' };
 
@@ -38,12 +50,31 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, tableT
             return (
               <div className="editableTable__block" key={item.id}>
                 <div className="editableTable__block-item">
-                  <p>{item.name}</p>
+                  {
+                    isEditingItem
+                      ? (
+                        <input
+                          type="text"
+                          autoFocus
+                          value={item.name}
+                          onChange={onChange}
+                        />
+                      )
+                      : <p>{item.name}</p>
+                  }
                   <p>{item.value}</p>
                 </div>
                 <div className="editableTable__block-edits">
-                  <img src={penil} alt="penil" />
-                  <img src={garbage} alt="garbage" />
+                  <img
+                    src={penil}
+                    alt="penil"
+                    onClick={() => setIsEditingItem(!isEditingItem)}
+                  />
+                  <img
+                    src={garbage}
+                    alt="garbage"
+                    onClick={() => handleDeleteIncomeItem(item.id)}
+                  />
                 </div>
               </div>
             )

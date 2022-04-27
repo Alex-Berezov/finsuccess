@@ -157,7 +157,7 @@ const Dashboard: FC = () => {
         </div>
       </div>
       <Modal active={incomeModalActive} setActive={setIncomeModalActive}>
-        <EditableBalanceTable tableData={incomeData} tableTitle='Доходы' />
+        <EditableBalanceTable tableData={incomeData} />
       </Modal>
       <Modal active={expensesModalActive} setActive={setExpensesModalActive}>
         Second modal

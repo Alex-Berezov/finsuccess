@@ -9,6 +9,8 @@ export interface IncomesState {
 export enum IncomesActionType {
   FETCH_INCOMES = 'FETCH_INCOMES',
   ADD_INCOME = 'ADD_INCOME',
+  DELETE_INCOME = 'DELETE_INCOME',
+  UPDATE_INCOME = 'UPDATE_INCOME',
   INCOMES_SUCCESS = 'INCOMES_SUCCESS',
   INCOMES_FAILURE = 'INCOMES_FAILURE'
 }
@@ -20,6 +22,16 @@ interface FetchIncomesAction {
 interface AddIncomeAction {
   type: IncomesActionType.ADD_INCOME,
   payload: IBalance
+}
+
+interface DeleteIncomeAction {
+  type: IncomesActionType.DELETE_INCOME,
+  paylod: string
+}
+
+interface UpdateIncomeAction {
+  type: IncomesActionType.UPDATE_INCOME,
+  payload: string
 }
 
 interface IncomesSuccessAction {
@@ -35,5 +47,7 @@ interface IncomesFailureAction {
 export type IncomesAction =
   FetchIncomesAction
   | AddIncomeAction
+  | DeleteIncomeAction
+  | UpdateIncomeAction
   | IncomesSuccessAction
   | IncomesFailureAction
