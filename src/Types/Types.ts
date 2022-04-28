@@ -1,5 +1,5 @@
 export interface IBalance {
-  id: number | string
+  id: string
   name: string
   value: number
 }

@@ -19,27 +19,49 @@ interface addIncomeValues {
 }
 
 const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
-  const [isAddingIncome, setIsAddingIncome] = useState(false)
-  const [isEditingItem, setIsEditingItem] = useState(false)
+  const [isAddingIncome, setIsAddingIncome] = useState<boolean>(false)
+  const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
+  const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
   const dispatch = useDispatch()
+
+  const editIncomeItem = useInput('')
+
+  console.log('====================================');
+  console.log('editIncomeItem.value >>', editIncomeItem.value);
+  console.log('====================================');
+
+  const initialValues: addIncomeValues = { incomesItem: '' };
 
   const addIncome = (newIncome: IBalance) => dispatch({
     type: IncomesActionType.ADD_INCOME,
     newIncome: newIncome
   })
 
-  const deleteIncome = (incomeId: string | number) => dispatch({
+  const deleteIncome = (incomeId: string) => dispatch({
     type: IncomesActionType.DELETE_INCOME,
     incomeId: incomeId
   })
 
-  const handleDeleteIncomeItem = (id: string | number) => {
+  const updateIncome = (incomeId: string, incomeName: string) => dispatch({
+    type: IncomesActionType.UPDATE_INCOME,
+    incomeId,
+    incomeName
+  })
+
+  const handleDeleteIncomeItem = (id: string) => {
     deleteIncome(id)
   }
 
-  const { onChange, value } = useInput('')
+  const handleEditingIncomeItem = (id: string, value: string) => {
+    setSelectedForEditItem(id)
+    editIncomeItem.setValue(value)
+    setIsEditingItem(true)
+  }
 
-  const initialValues: addIncomeValues = { incomesItem: '' };
+  const handleSentEditedIncomeItem = () => {
+    updateIncome(selectedForEditItem, editIncomeItem.value)
+    setIsEditingItem(false)
+  }
 
   return (
     <>
@@ -51,13 +73,13 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
               <div className="editableTable__block" key={item.id}>
                 <div className="editableTable__block-item">
                   {
-                    isEditingItem
+                    isEditingItem && selectedForEditItem === item.id
                       ? (
                         <input
                           type="text"
                           autoFocus
-                          value={item.name}
-                          onChange={onChange}
+                          value={editIncomeItem.value}
+                          onChange={editIncomeItem.onChange}
                         />
                       )
                       : <p>{item.name}</p>
@@ -65,16 +87,29 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
                   <p>{item.value}</p>
                 </div>
                 <div className="editableTable__block-edits">
-                  <img
-                    src={penil}
-                    alt="penil"
-                    onClick={() => setIsEditingItem(!isEditingItem)}
-                  />
-                  <img
-                    src={garbage}
-                    alt="garbage"
-                    onClick={() => handleDeleteIncomeItem(item.id)}
-                  />
+                  {
+                    isEditingItem && selectedForEditItem === item.id
+                      ? <button
+                        className='okBtn'
+                        onClick={handleSentEditedIncomeItem}
+                      >
+                        Ok
+                      </button>
+                      : (
+                        <>
+                          <img
+                            src={penil}
+                            alt="penil"
+                            onClick={() => handleEditingIncomeItem(item.id, item.name)}
+                          />
+                          <img
+                            src={garbage}
+                            alt="garbage"
+                            onClick={() => handleDeleteIncomeItem(item.id)}
+                          />
+                        </>
+                      )
+                  }
                 </div>
               </div>
             )
@@ -93,7 +128,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
               >
                 <Form className='addIncomesForm'>
                   <Field id="incomesItem" name="incomesItem" placeholder="Статья доходов" />
-                  <button className='addIncomesBtn' type="submit">Ok</button>
+                  <button className='okBtn' type="submit">Ok</button>
                 </Form>
               </Formik>
             )

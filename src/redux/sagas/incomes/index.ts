@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { call, takeEvery, put } from 'redux-saga/effects'
 import { IncomesActionType } from '../../../Types/IncomesTypes';
 import { incomesAPI } from './../../../api/incomesAPI'
@@ -60,5 +60,5 @@ export default function* incomesSaga() {
   yield takeEvery(IncomesActionType.FETCH_INCOMES, FetchIncomesList)
   yield takeEvery(IncomesActionType.ADD_INCOME, AddIncome)
   yield takeEvery(IncomesActionType.DELETE_INCOME, DeleteIncome)
-  yield takeEvery(IncomesActionType.DELETE_INCOME, UpdateIncome)
+  yield takeEvery(IncomesActionType.UPDATE_INCOME, UpdateIncome)
 }
