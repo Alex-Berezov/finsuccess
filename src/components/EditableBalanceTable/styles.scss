@@ -63,13 +63,13 @@ table {
     }
   }
 
-  .addIncomesForm {
+  .addItemForm {
     width: 100%;
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
 
-    #incomesItem {
+    #addFormItemValue {
       width: 88%;
       outline: none;
       border: none;
@@ -78,7 +78,7 @@ table {
   }
 }
 
-.addIncomesItem {
+.addItemButton {
   margin-top: 30px;
 }
 

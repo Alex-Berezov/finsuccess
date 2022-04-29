@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import EditableBalanceTable from '../../components/EditableBalanceTable';
+import IncomeEditableTable from '../../components/DashboardEditableTables/IncomeEditableTable';
 import Modal from '../../components/Modal';
 import { IncomesActionType } from '../../Types/IncomesTypes';
 import BalanceTable from './../../components/BalanceTable/index';
@@ -157,7 +157,7 @@ const Dashboard: FC = () => {
         </div>
       </div>
       <Modal active={incomeModalActive} setActive={setIncomeModalActive}>
-        <EditableBalanceTable tableData={incomeData} />
+        <IncomeEditableTable />
       </Modal>
       <Modal active={expensesModalActive} setActive={setExpensesModalActive}>
         Second modal

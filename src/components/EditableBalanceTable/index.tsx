@@ -1,67 +1,51 @@
 import React, { FC, useState } from 'react';
-import { IBalance } from '../../Types/Types';
 import penil from '../../assets/img/pencil.svg';
 import garbage from '../../assets/img/garbage.svg';
 import { Formik, Form, Field } from 'formik';
-import { IncomesActionType } from '../../Types/IncomesTypes';
-import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import useInput from './../../hooks/useInput';
+import { IBalance } from './../../Types/Types';
 
 import './styles.scss'
-import useInput from './../../hooks/useInput';
 
 interface EditableBalanceTableProps {
   tableData: Array<IBalance>
+  addItem: (obj: IBalance) => void
+  deleteItem: (id: string) => void
+  updateItem: (incomeId: string, incomeName: string) => void
 }
 
-interface addIncomeValues {
-  incomesItem: string;
+interface initialValuesProps {
+  addFormItemValue: string
 }
 
-const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
-  const [isAddingIncome, setIsAddingIncome] = useState<boolean>(false)
+const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addItem, deleteItem, updateItem }) => {
+  const [isAddingItem, setIsAddingItem] = useState<boolean>(false)
   const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
   const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
-  const dispatch = useDispatch()
 
-  const editIncomeItem = useInput('')
+  const editItemInput = useInput('')
 
-  const initialValues: addIncomeValues = { incomesItem: '' };
+  const initialValues: initialValuesProps = { addFormItemValue: '' };
 
-  const addIncome = (newIncome: IBalance) => dispatch({
-    type: IncomesActionType.ADD_INCOME,
-    newIncome: newIncome
-  })
-
-  const deleteIncome = (incomeId: string) => dispatch({
-    type: IncomesActionType.DELETE_INCOME,
-    incomeId: incomeId
-  })
-
-  const updateIncome = (incomeId: string, incomeName: string) => dispatch({
-    type: IncomesActionType.UPDATE_INCOME,
-    incomeId,
-    incomeName
-  })
-
-  const handleDeleteIncomeItem = (id: string) => {
-    deleteIncome(id)
+  const handleDeleteItem = (id: string) => {
+    deleteItem(id)
   }
 
-  const handleEditingIncomeItem = (id: string, value: string) => {
+  const handleEditingItem = (id: string, value: string) => {
     setSelectedForEditItem(id)
-    editIncomeItem.setValue(value)
+    editItemInput.setValue(value)
     setIsEditingItem(true)
   }
 
-  const handleSentEditedIncomeItem = () => {
-    updateIncome(selectedForEditItem, editIncomeItem.value)
+  const handleSentEditedItem = () => {
+    updateItem(selectedForEditItem, editItemInput.value)
     setIsEditingItem(false)
   }
 
   return (
     <>
-      <h2>Редактировать статьи доходов</h2>
+      <h2>Редактировать статьи</h2>
       <div className="editableTable">
         {
           tableData.map((item) => {
@@ -74,8 +58,8 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
                         <input
                           type="text"
                           autoFocus
-                          value={editIncomeItem.value}
-                          onChange={editIncomeItem.onChange}
+                          value={editItemInput.value}
+                          onChange={editItemInput.onChange}
                         />
                       )
                       : <p>{item.name}</p>
@@ -87,7 +71,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
                     isEditingItem && selectedForEditItem === item.id
                       ? <button
                         className='okBtn'
-                        onClick={handleSentEditedIncomeItem}
+                        onClick={handleSentEditedItem}
                       >
                         Ok
                       </button>
@@ -96,12 +80,12 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
                           <img
                             src={penil}
                             alt="penil"
-                            onClick={() => handleEditingIncomeItem(item.id, item.name)}
+                            onClick={() => handleEditingItem(item.id, item.name)}
                           />
                           <img
                             src={garbage}
                             alt="garbage"
-                            onClick={() => handleDeleteIncomeItem(item.id)}
+                            onClick={() => handleDeleteItem(item.id)}
                           />
                         </>
                       )
@@ -112,18 +96,18 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
           })
         }
         {
-          isAddingIncome
+          isAddingItem
             ? (
               <Formik
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
                   actions.setSubmitting(false);
-                  addIncome({ id: uuidv4(), name: values.incomesItem, value: 0 })
-                  setIsAddingIncome(false);
+                  addItem({ id: uuidv4(), name: values.addFormItemValue, value: 0 })
+                  setIsAddingItem(false);
                 }}
               >
-                <Form className='addIncomesForm'>
-                  <Field id="incomesItem" name="incomesItem" placeholder="Статья доходов" />
+                <Form className='addItemForm'>
+                  <Field id="addFormItemValue" name="addFormItemValue" placeholder="Новая статья" />
                   <button className='okBtn' type="submit">Ok</button>
                 </Form>
               </Formik>
@@ -132,10 +116,10 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
         }
       </div>
       <button
-        className='addIncomesItem'
-        onClick={() => setIsAddingIncome(true)}
+        className='addItemButton'
+        onClick={() => setIsAddingItem(true)}
       >
-        Добавить статью доходов
+        Добавить статью
       </button>
     </>
   );
