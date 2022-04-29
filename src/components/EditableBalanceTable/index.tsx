@@ -26,10 +26,6 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData }) => {
 
   const editIncomeItem = useInput('')
 
-  console.log('====================================');
-  console.log('editIncomeItem.value >>', editIncomeItem.value);
-  console.log('====================================');
-
   const initialValues: addIncomeValues = { incomesItem: '' };
 
   const addIncome = (newIncome: IBalance) => dispatch({

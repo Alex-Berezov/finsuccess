@@ -1,0 +1,1 @@
+export const selectExpenses = (state: { expenses: any; }) => state.expenses

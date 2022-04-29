@@ -1,15 +1,26 @@
 {
   "incomes": [
     {
-      "id": "leha0",
-      "name": "Лёхина зарплата",
-      "value": 120000
+      "id": "incomes-start-data-0",
+      "name": "Зарплата",
+      "value": 100000
     },
     {
-      "id": "fara1",
-      "name": "Фаркина зарплата",
-      "value": 150000
+      "id": "incomes-start-data-1",
+      "name": "Фриланс",
+      "value": 50000
     }
   ],
-  "expenses": []
+  "expenses": [
+    {
+      "id": "expenses-start-data-0",
+      "name": "Аренда квартиры",
+      "value": 30000
+    },
+    {
+      "id": "expenses-start-data-1",
+      "name": "Комуналка",
+      "value": 5000
+    }
+  ]
 }
