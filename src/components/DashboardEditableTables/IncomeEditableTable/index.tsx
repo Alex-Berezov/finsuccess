@@ -17,7 +17,7 @@ const IncomeEditableTable: FC = () => {
 
   const deleteIncome = (incomeId: string) => dispatch({
     type: IncomesActionType.DELETE_INCOME,
-    incomeId: incomeId
+    incomeId
   })
 
   const updateIncome = (incomeId: string, incomeName: string) => dispatch({

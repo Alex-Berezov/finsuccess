@@ -56,7 +56,7 @@ export function* UpdateExpense(payload: UpdateExpenseTypes) {
   }
 }
 
-export default function* ExpensesSaga() {
+export default function* expensesSaga() {
   yield takeEvery(ExpensesActionType.FETCH_EXPENSES, FetchExpensesList)
   yield takeEvery(ExpensesActionType.ADD_EXPENSE, AddExpense)
   yield takeEvery(ExpensesActionType.DELETE_EXPENSE, DeleteExpense)

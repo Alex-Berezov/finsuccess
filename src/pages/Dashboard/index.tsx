@@ -6,8 +6,11 @@ import { IncomesActionType } from '../../Types/IncomesTypes';
 import BalanceTable from './../../components/BalanceTable/index';
 import { action } from './../../redux/index';
 import { selectIncomes } from './../../redux/redusers/incomes/selectors';
+import ExpenseEditableTable from './../../components/DashboardEditableTables/ExpensesEditableTable/index';
+import { selectExpenses } from './../../redux/redusers/expenses/selectors';
 
 import './styles.scss'
+import { ExpensesActionType } from '../../Types/ExpensesTypes';
 
 const Dashboard: FC = () => {
   const [incomeModalActive, setIncomeModalActive] = useState(false)
@@ -17,9 +20,11 @@ const Dashboard: FC = () => {
 
   useEffect(() => {
     action(IncomesActionType.FETCH_INCOMES)
+    action(ExpensesActionType.FETCH_EXPENSES)
   }, [])
 
   const incomeData = useSelector(selectIncomes).incomes
+  const expensesData = useSelector(selectExpenses).expenses
 
   return (
     <div className='dashboard'>
@@ -35,29 +40,7 @@ const Dashboard: FC = () => {
           </button>
         </div>
         <div className="balance__block-item expenses">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={2}>Расходы</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Item name1</td>
-                <td>Item value1</td>
-              </tr>
-              <tr>
-                <td>Item name2</td>
-                <td>Item value2</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Total</td>
-                <td>613</td>
-              </tr>
-            </tfoot>
-          </table>
+          <BalanceTable tableData={expensesData} tableTitle='Расходы' />
           <button
             type='button'
             className='addItem'
@@ -160,7 +143,7 @@ const Dashboard: FC = () => {
         <IncomeEditableTable />
       </Modal>
       <Modal active={expensesModalActive} setActive={setExpensesModalActive}>
-        Second modal
+        <ExpenseEditableTable />
       </Modal>
       <Modal active={assetsModalActive} setActive={setAssetsModalActive}>
         Third modal
