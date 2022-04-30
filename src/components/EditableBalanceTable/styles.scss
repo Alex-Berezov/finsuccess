@@ -62,20 +62,6 @@ table {
       }
     }
   }
-
-  .addItemForm {
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-
-    #addFormItemValue {
-      width: 88%;
-      outline: none;
-      border: none;
-      border-bottom: 1px solid gray;
-    }
-  }
 }
 
 .addItemButton {
@@ -83,6 +69,7 @@ table {
 }
 
 .okBtn {
+  height: fit-content;
   padding: 5px;
   border: 1px solid green;
   border-radius: 3px;

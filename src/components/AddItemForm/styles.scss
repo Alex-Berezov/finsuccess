@@ -1,0 +1,22 @@
+.addItemForm {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+
+  &__field-block {
+    width: 88%;
+    display: flex;
+    flex-direction: column;
+    
+    #addFormItemValue {
+      outline: none;
+      border: none;
+      border-bottom: 1px solid gray;
+    }
+
+    .error {
+      color: red;
+    }
+  }
+}

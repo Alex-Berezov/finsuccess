@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react';
 import penil from '../../assets/img/pencil.svg';
 import garbage from '../../assets/img/garbage.svg';
-import { Formik, Form, Field } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
 import useInput from './../../hooks/useInput';
 import { IBalance } from './../../Types/Types';
+import AddItemForm from './../AddItemForm/index';
 
 import './styles.scss'
 
@@ -15,18 +14,12 @@ interface EditableBalanceTableProps {
   updateItem: (incomeId: string, incomeName: string) => void
 }
 
-interface initialValuesProps {
-  addFormItemValue: string
-}
-
 const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addItem, deleteItem, updateItem }) => {
   const [isAddingItem, setIsAddingItem] = useState<boolean>(false)
   const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
   const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
 
   const editItemInput = useInput('')
-
-  const initialValues: initialValuesProps = { addFormItemValue: '' };
 
   const handleDeleteItem = (id: string) => {
     deleteItem(id)
@@ -95,25 +88,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
             )
           })
         }
-        {
-          isAddingItem
-            ? (
-              <Formik
-                initialValues={initialValues}
-                onSubmit={(values, actions) => {
-                  actions.setSubmitting(false);
-                  addItem({ id: uuidv4(), name: values.addFormItemValue, value: 0 })
-                  setIsAddingItem(false);
-                }}
-              >
-                <Form className='addItemForm'>
-                  <Field id="addFormItemValue" name="addFormItemValue" placeholder="Новая статья" />
-                  <button className='okBtn' type="submit">Ok</button>
-                </Form>
-              </Formik>
-            )
-            : null
-        }
+        <AddItemForm addItem={addItem} isAddingItem={isAddingItem} setIsAddingItem={setIsAddingItem} />
       </div>
       <button
         className='addItemButton'
