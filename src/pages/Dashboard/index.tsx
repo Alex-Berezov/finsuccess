@@ -15,8 +15,6 @@ import { ExpensesActionType } from '../../Types/ExpensesTypes';
 const Dashboard: FC = () => {
   const [incomeModalActive, setIncomeModalActive] = useState(false)
   const [expensesModalActive, setExpensesModalActive] = useState(false)
-  const [assetsModalActive, setAssetsModalActive] = useState(false)
-  const [liabilitiesModalActive, setLiabilitiesModalActive] = useState(false)
 
   useEffect(() => {
     action(IncomesActionType.FETCH_INCOMES)
@@ -45,70 +43,6 @@ const Dashboard: FC = () => {
             type='button'
             className='addItem'
             onClick={() => setExpensesModalActive(true)}
-          >
-            Редактировать
-          </button>
-        </div>
-        <div className="balance__block-item assets">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={2}>Активы</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Item name1</td>
-                <td>Item value1</td>
-              </tr>
-              <tr>
-                <td>Item name2</td>
-                <td>Item value2</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Total</td>
-                <td>613</td>
-              </tr>
-            </tfoot>
-          </table>
-          <button
-            type='button'
-            className='addItem'
-            onClick={() => setAssetsModalActive(true)}
-          >
-            Редактировать
-          </button>
-        </div>
-        <div className="balance__block-item liabilities">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={2}>Пассивы</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Item name1</td>
-                <td>Item value1</td>
-              </tr>
-              <tr>
-                <td>Item name2</td>
-                <td>Item value2</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Total</td>
-                <td>613</td>
-              </tr>
-            </tfoot>
-          </table>
-          <button
-            type='button'
-            className='addItem'
-            onClick={() => setLiabilitiesModalActive(true)}
           >
             Редактировать
           </button>
@@ -144,12 +78,6 @@ const Dashboard: FC = () => {
       </Modal>
       <Modal active={expensesModalActive} setActive={setExpensesModalActive}>
         <ExpenseEditableTable />
-      </Modal>
-      <Modal active={assetsModalActive} setActive={setAssetsModalActive}>
-        Third modal
-      </Modal>
-      <Modal active={liabilitiesModalActive} setActive={setLiabilitiesModalActive}>
-        Fourth modal
       </Modal>
     </div>
   );
