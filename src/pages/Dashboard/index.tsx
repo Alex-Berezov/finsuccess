@@ -8,9 +8,14 @@ import { action } from './../../redux/index';
 import { selectIncomes } from './../../redux/redusers/incomes/selectors';
 import ExpenseEditableTable from './../../components/DashboardEditableTables/ExpensesEditableTable/index';
 import { selectExpenses } from './../../redux/redusers/expenses/selectors';
+import { ExpensesActionType } from '../../Types/ExpensesTypes';
+import { IBalance } from './../../Types/Types';
 
 import './styles.scss'
-import { ExpensesActionType } from '../../Types/ExpensesTypes';
+
+const countArrayValues = (array: Array<IBalance>) => {
+  return array.reduce((sum: number, current: IBalance) => sum + current.value, 0)
+}
 
 const Dashboard: FC = () => {
   const [incomeModalActive, setIncomeModalActive] = useState(false)
@@ -23,6 +28,11 @@ const Dashboard: FC = () => {
 
   const incomeData = useSelector(selectIncomes).incomes
   const expensesData = useSelector(selectExpenses).expenses
+
+  const balanceData = [
+    { id: 'balance-data-incomse', name: 'Доходы', value: countArrayValues(incomeData) },
+    { id: 'balance-data-expenses', name: 'Расходы', value: -countArrayValues(expensesData) }
+  ]
 
   return (
     <div className='dashboard'>
@@ -48,29 +58,7 @@ const Dashboard: FC = () => {
           </button>
         </div>
         <div className="balance__block-item balance">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={2}>Баланс</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Item name1</td>
-                <td>Item value1</td>
-              </tr>
-              <tr>
-                <td>Item name2</td>
-                <td>Item value2</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Total</td>
-                <td>613</td>
-              </tr>
-            </tfoot>
-          </table>
+          <BalanceTable tableData={balanceData} tableTitle='Баланс' />
         </div>
       </div>
       <Modal active={incomeModalActive} setActive={setIncomeModalActive}>
