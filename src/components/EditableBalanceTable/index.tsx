@@ -19,7 +19,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
   const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
   const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
 
-  const editItemInput = useInput('')
+  const editItemInput = useInput('', { isEmpty: true, minLength: 2, maxLength: 22, uniqueTask: tableData })
 
   const handleDeleteItem = (id: string) => {
     deleteItem(id)
