@@ -7,8 +7,18 @@
     },
     {
       "id": "incomes-start-data-1",
-      "name": "Фриланс",
+      "name": "Freelance",
       "value": 50000
+    },
+    {
+      "id": "7e89957d-5d5c-4d6e-b6d4-1f544fc9371f",
+      "name": "ddd",
+      "value": 0
+    },
+    {
+      "id": "7ea3cb1c-2bd1-4026-a63e-6e41a613e963",
+      "name": "ddddsasd",
+      "value": 0
     }
   ],
   "expenses": [
@@ -21,6 +31,11 @@
       "id": "expenses-start-data-1",
       "name": "Комуналка",
       "value": 5000
+    },
+    {
+      "id": "6d2547de-b622-448c-87e2-3be8f7d27d5b",
+      "name": "test",
+      "value": 0
     }
   ]
 }

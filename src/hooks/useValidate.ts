@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { IBalance } from './../Types/Types';
+import { IBalance } from '../Types/Types';
 
-export const useValidateTableItem = (value: string, validations: any) => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(true)
-  const [minLengthError, setMinLengthError] = useState<boolean>(false)
+export const useValidate = (value: string, validations: any) => {
+  const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const [maxLengthError, setMaxLengthError] = useState<boolean>(false)
   const [uniqueValueError, setUniqueValueError] = useState<boolean>(false)
   const [errors, setErrors] = useState<string>('')
+
+  console.log('====================================');
+  console.log('validations >>', validations);
+  console.log('====================================');
 
   useEffect(() => {
     for (const validation in validations) {
@@ -19,10 +22,6 @@ export const useValidateTableItem = (value: string, validations: any) => {
           value.length > validations[validation] ? setMaxLengthError(true) : setMaxLengthError(false)
           maxLengthError && setErrors('Слишком много букв')
           break
-        case 'minLength':
-          value.length < validations[validation] ? setMinLengthError(true) : setMinLengthError(false)
-          minLengthError && setErrors('Слишком мало букв')
-          break
         case 'uniqueValue':
           validations[validation].find((elem: IBalance) => elem.name === value)
             ? setUniqueValueError(true)
@@ -34,7 +33,7 @@ export const useValidateTableItem = (value: string, validations: any) => {
           break
       }
     }
-  }, [value, validations, isEmpty, minLengthError, maxLengthError, uniqueValueError])
+  }, [value, validations, isEmpty, maxLengthError, uniqueValueError])
 
-  return { errors, isEmpty, minLengthError, maxLengthError, uniqueValueError }
+  return { errors, setErrors, isEmpty, maxLengthError, uniqueValueError }
 }

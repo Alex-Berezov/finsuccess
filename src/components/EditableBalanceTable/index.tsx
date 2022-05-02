@@ -6,6 +6,7 @@ import { IBalance } from './../../Types/Types';
 import AddItemForm from './../AddItemForm/index';
 
 import './styles.scss'
+import NotificationsList from './../NotificationsList/index';
 
 interface EditableBalanceTableProps {
   tableData: Array<IBalance>
@@ -19,16 +20,17 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
   const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
   const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
 
-  const editItemInput = useInput('', { isEmpty: true, minLength: 2, maxLength: 22, uniqueTask: tableData })
+  const editItemInput = useInput('', { isEmpty: true, maxLength: 22, uniqueTask: tableData })
 
   const handleDeleteItem = (id: string) => {
     deleteItem(id)
   }
 
   const handleEditingItem = (id: string, value: string) => {
+    editItemInput.setErrors('')
     setSelectedForEditItem(id)
-    editItemInput.setValue(value)
     setIsEditingItem(true)
+    editItemInput.setValue(value)
   }
 
   const handleSentEditedItem = () => {
@@ -45,43 +47,54 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
             return (
               <div className="editableTable__block" key={item.id}>
                 <div className="editableTable__block-item">
-                  {
-                    isEditingItem && selectedForEditItem === item.id
-                      ? (
-                        <input
-                          type="text"
-                          autoFocus
-                          value={editItemInput.value}
-                          onChange={editItemInput.onChange}
-                        />
-                      )
-                      : <p>{item.name}</p>
-                  }
-                  <p>{item.value}</p>
+                  <div className="editableTable__block-item-field">
+                    {
+                      isEditingItem && selectedForEditItem === item.id
+                        ? (
+                          <>
+                            <input
+                              type="text"
+                              autoFocus
+                              value={editItemInput.value}
+                              onChange={editItemInput.onChange}
+                              onBlur={editItemInput.onBlur}
+                            />
+                          </>
+                        )
+                        : <p>{item.name}</p>
+                    }
+                    <p>{item.value}</p>
+                  </div>
+                  <div className="editableTable__block-item-edits">
+                    {
+                      isEditingItem && selectedForEditItem === item.id
+                        ? <button
+                          className='okBtn'
+                          onClick={handleSentEditedItem}
+                        >
+                          Ok
+                        </button>
+                        : (
+                          <>
+                            <img
+                              src={penil}
+                              alt="penil"
+                              onClick={() => handleEditingItem(item.id, item.name)}
+                            />
+                            <img
+                              src={garbage}
+                              alt="garbage"
+                              onClick={() => handleDeleteItem(item.id)}
+                            />
+                          </>
+                        )
+                    }
+                  </div>
                 </div>
-                <div className="editableTable__block-edits">
+                <div className="editableTable__block-errors">
                   {
-                    isEditingItem && selectedForEditItem === item.id
-                      ? <button
-                        className='okBtn'
-                        onClick={handleSentEditedItem}
-                      >
-                        Ok
-                      </button>
-                      : (
-                        <>
-                          <img
-                            src={penil}
-                            alt="penil"
-                            onClick={() => handleEditingItem(item.id, item.name)}
-                          />
-                          <img
-                            src={garbage}
-                            alt="garbage"
-                            onClick={() => handleDeleteItem(item.id)}
-                          />
-                        </>
-                      )
+                    selectedForEditItem === item.id &&
+                    <NotificationsList isEditingItem={isEditingItem} useInput={editItemInput} />
                   }
                 </div>
               </div>
