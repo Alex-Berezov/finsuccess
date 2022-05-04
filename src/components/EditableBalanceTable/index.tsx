@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import penil from '../../assets/img/pencil.svg';
 import garbage from '../../assets/img/garbage.svg';
 import useInput from './../../hooks/useInput';
@@ -20,7 +20,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
   const [isEditingItem, setIsEditingItem] = useState<boolean>(false)
   const [selectedForEditItem, setSelectedForEditItem] = useState<string>('')
 
-  const editItemInput = useInput('', { isEmpty: true, maxLength: 22, uniqueTask: tableData })
+  const editItemInput = useInput('', { isEmpty: true, maxLength: 22, uniqueValue: tableData })
 
   const handleDeleteItem = (id: string) => {
     deleteItem(id)
@@ -69,8 +69,9 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
                     {
                       isEditingItem && selectedForEditItem === item.id
                         ? <button
-                          className='okBtn'
+                          className={editItemInput.errors ? 'okBtn disabled' : 'okBtn'}
                           onClick={handleSentEditedItem}
+                          disabled={editItemInput.errors ? true : false}
                         >
                           Ok
                         </button>
@@ -93,8 +94,9 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
                 </div>
                 <div className="editableTable__block-errors">
                   {
-                    selectedForEditItem === item.id &&
-                    <NotificationsList isEditingItem={isEditingItem} useInput={editItemInput} />
+                    selectedForEditItem === item.id
+                      ? <NotificationsList isEditingItem={isEditingItem} useInput={editItemInput} />
+                      : null
                   }
                 </div>
               </div>

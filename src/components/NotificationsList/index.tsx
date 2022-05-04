@@ -8,6 +8,10 @@ interface NotificationsListProps {
 
 const NotificationsList: FC<NotificationsListProps> = ({ isEditingItem, useInput }) => {
 
+  console.log('====================================');
+  console.log('useInput.errors >>', useInput.errors);
+  console.log('====================================');
+
   return (
     <div className='errors-list'>
       {

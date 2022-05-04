@@ -7,6 +7,7 @@ export default function useInput(initialValue: string, validations: Object) {
   const validation = useValidate(value, validations)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    validation.setErrors('')
     setValue(e.target.value)
   }
 

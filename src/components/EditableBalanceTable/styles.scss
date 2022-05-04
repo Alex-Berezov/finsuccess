@@ -77,3 +77,12 @@
     background-color: rgb(51, 160, 51);
   }
 }
+
+.disabled {
+  border: 1px solid grey;
+  background-color: grey;
+
+  &:hover {
+    background-color: grey;
+  }
+}
