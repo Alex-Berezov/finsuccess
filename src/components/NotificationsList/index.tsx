@@ -7,11 +7,7 @@ interface NotificationsListProps {
 }
 
 const NotificationsList: FC<NotificationsListProps> = ({ isEditingItem, useInput }) => {
-
-  console.log('====================================');
-  console.log('useInput.errors >>', useInput.errors);
-  console.log('====================================');
-
+  //TODO: Разобраться, почему сброс ошибки происходит только после ввода второго символа?!?!?
   return (
     <div className='errors-list'>
       {

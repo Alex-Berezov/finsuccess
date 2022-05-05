@@ -51,15 +51,13 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
                     {
                       isEditingItem && selectedForEditItem === item.id
                         ? (
-                          <>
-                            <input
-                              type="text"
-                              autoFocus
-                              value={editItemInput.value}
-                              onChange={editItemInput.onChange}
-                              onBlur={editItemInput.onBlur}
-                            />
-                          </>
+                          <input
+                            type="text"
+                            autoFocus
+                            value={editItemInput.value}
+                            onChange={editItemInput.onChange}
+                            onBlur={editItemInput.onBlur}
+                          />
                         )
                         : <p>{item.name}</p>
                     }
@@ -103,7 +101,12 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
             )
           })
         }
-        <AddItemForm addItem={addItem} isAddingItem={isAddingItem} setIsAddingItem={setIsAddingItem} />
+        <AddItemForm
+          addItem={addItem}
+          isAddingItem={isAddingItem}
+          setIsAddingItem={setIsAddingItem}
+          tableData={tableData}
+        />
       </div>
       <button
         className='addItemButton'

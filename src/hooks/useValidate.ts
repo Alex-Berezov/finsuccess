@@ -6,7 +6,6 @@ export const useValidate = (value: string, validations: any) => {
   const [maxLengthError, setMaxLengthError] = useState<boolean>(false)
   const [uniqueValueError, setUniqueValueError] = useState<boolean>(false)
   const [errors, setErrors] = useState<string>('')
-  const [prevValue, setPrevValue] = useState<string>('')
 
   useEffect(() => {
     for (const validation in validations) {
@@ -20,7 +19,7 @@ export const useValidate = (value: string, validations: any) => {
           maxLengthError && setErrors('Слишком много букв')
           break
         case 'uniqueValue':
-          prevValue !== value && validations[validation].find((elem: IBalance) => elem.name === value)
+          validations[validation].find((elem: IBalance) => elem.name === value)
             ? setUniqueValueError(true)
             : setUniqueValueError(false)
           uniqueValueError && setErrors('Такая статья уже есть')
@@ -30,7 +29,6 @@ export const useValidate = (value: string, validations: any) => {
           break
       }
     }
-    setPrevValue(value)
   }, [value, validations, isEmpty, maxLengthError, uniqueValueError])
 
   return { errors, setErrors, isEmpty, maxLengthError, uniqueValueError }
