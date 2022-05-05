@@ -59,7 +59,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
                             onBlur={editItemInput.onBlur}
                           />
                         )
-                        : <p>{item.name}</p>
+                        : <p onClick={() => handleEditingItem(item.id, item.name)} >{item.name}</p>
                     }
                     <p>{item.value}</p>
                   </div>
@@ -74,18 +74,11 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
                           Ok
                         </button>
                         : (
-                          <>
-                            <img
-                              src={penil}
-                              alt="penil"
-                              onClick={() => handleEditingItem(item.id, item.name)}
-                            />
-                            <img
-                              src={garbage}
-                              alt="garbage"
-                              onClick={() => handleDeleteItem(item.id)}
-                            />
-                          </>
+                          <img
+                            src={garbage}
+                            alt="garbage"
+                            onClick={() => handleDeleteItem(item.id)}
+                          />
                         )
                     }
                   </div>
