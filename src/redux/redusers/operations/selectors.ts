@@ -1,0 +1,1 @@
+export const selectOperations = (state: { operations: any }) => state.operations
