@@ -10,12 +10,12 @@ import ExpenseEditableTable from './../../components/DashboardEditableTables/Exp
 import { selectExpenses } from './../../redux/redusers/expenses/selectors';
 import { ExpensesActionType } from '../../Types/ExpensesTypes';
 import { IBalance } from './../../Types/Types';
+import { selectOperations } from './../../redux/redusers/operations/selectors';
+import { OperationsActionType } from '../../Types/OperationsTypes';
+import OperationsBlock from './../../components/OperationsBlock/index';
+import { byField, countArrayValues } from './../../utils/index';
 
 import './styles.scss'
-
-const countArrayValues = (array: Array<IBalance>) => {
-  return array.reduce((sum: number, current: IBalance) => sum + current.value, 0)
-}
 
 const Dashboard: FC = () => {
   const [incomeModalActive, setIncomeModalActive] = useState(false)
@@ -24,10 +24,16 @@ const Dashboard: FC = () => {
   useEffect(() => {
     action(IncomesActionType.FETCH_INCOMES)
     action(ExpensesActionType.FETCH_EXPENSES)
+    action(OperationsActionType.FETCH_OPERATIONS)
   }, [])
 
   const incomeData = useSelector(selectIncomes).incomes
   const expensesData = useSelector(selectExpenses).expenses
+  const operationsData = useSelector(selectOperations).operations.sort(byField('date'))
+
+  console.log('====================================');
+  console.log('operationsData >>', operationsData);
+  console.log('====================================');
 
   const balanceData = [
     { id: 'balance-data-incomse', name: 'Доходы', value: countArrayValues(incomeData) },
@@ -61,6 +67,7 @@ const Dashboard: FC = () => {
           <BalanceTable tableData={balanceData} tableTitle='Баланс' />
         </div>
       </div>
+      <OperationsBlock tableData={operationsData} />
       <Modal active={incomeModalActive} setActive={setIncomeModalActive}>
         <IncomeEditableTable />
       </Modal>

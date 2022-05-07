@@ -14,15 +14,8 @@ table {
 
       .addItem {
         margin-top: 20px;
-        display: none;
-      }
-
-      &:hover {
-
-        .addItem {
-          display: block;
-          cursor: pointer;
-        }
+        display: block;
+        cursor: pointer;
       }
     }
   }
