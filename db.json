@@ -31,35 +31,35 @@
   "operations": [
     {
       "id": "operations-start-data-0",
-      "date": "06/05/2022",
+      "date": "06.05.2022",
       "value": 150000,
       "itemName": "Зарплата",
       "comment": ""
     },
     {
       "id": "operations-start-data-1",
-      "date": "01/05/2022",
+      "date": "01.05.2022",
       "value": 15000,
       "itemName": "Freelance",
       "comment": "За лендинг"
     },
     {
       "id": "operations-start-data-4",
-      "date": "04/05/2022",
+      "date": "04.05.2022",
       "value": 30000,
       "itemName": "Аренда квартиры",
       "comment": ""
     },
     {
       "id": "operations-start-data-3",
-      "date": "04/05/2022",
+      "date": "04.05.2022",
       "value": 4800,
       "itemName": "Комуналка",
       "comment": ""
     },
     {
       "id": "operations-start-data-2",
-      "date": "05/05/2022",
+      "date": "05.05.2022",
       "value": 10000,
       "itemName": "Freelance",
       "comment": "Правки по магазу"

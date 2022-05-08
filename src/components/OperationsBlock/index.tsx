@@ -1,17 +1,26 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { IOperations } from '../../Types/Types';
+import { getFinFormat } from './../../utils/index';
+import Modal from './../Modal/index';
+import AddOperationForm from './../AddOperationForm/index';
 
 import './styles.scss'
-import { getFinFormat } from './../../utils/index';
 
 interface OperationsBlockProps {
   tableData: Array<IOperations>
 }
 
 const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
+  const [addOperationModalActive, setAddOperationModalActive] = useState<boolean>(false)
+
   return (
     <div className='operations__block'>
-      <button className='addOperationBtn'>Добавить операцию</button>
+      <button
+        className='addOperationBtn'
+        onClick={() => setAddOperationModalActive(true)}
+      >
+        Добавить операцию
+      </button>
       <table>
         <thead>
           <tr>
@@ -26,7 +35,7 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
             tableData.map((item) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.date.replace(/\//g, '.')}</td>
+                  <td>{item.date}</td>
                   <td>{getFinFormat(item.value)}</td>
                   <td>{item.itemName}</td>
                   <td>{item.comment}</td>
@@ -36,6 +45,9 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
           }
         </tbody>
       </table>
+      <Modal active={addOperationModalActive} setActive={setAddOperationModalActive}>
+        <AddOperationForm />
+      </Modal>
     </div>
   );
 };

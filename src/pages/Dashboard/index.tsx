@@ -31,10 +31,6 @@ const Dashboard: FC = () => {
   const expensesData = useSelector(selectExpenses).expenses
   const operationsData = useSelector(selectOperations).operations.sort(byField('date'))
 
-  console.log('====================================');
-  console.log('operationsData >>', operationsData);
-  console.log('====================================');
-
   const balanceData = [
     { id: 'balance-data-incomse', name: 'Доходы', value: countArrayValues(incomeData) },
     { id: 'balance-data-expenses', name: 'Расходы', value: -countArrayValues(expensesData) }
