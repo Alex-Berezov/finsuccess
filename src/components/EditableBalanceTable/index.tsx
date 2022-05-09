@@ -1,5 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
-import penil from '../../assets/img/pencil.svg';
+import React, { FC, useState } from 'react';
 import garbage from '../../assets/img/garbage.svg';
 import useInput from './../../hooks/useInput';
 import { IBalance } from './../../Types/Types';

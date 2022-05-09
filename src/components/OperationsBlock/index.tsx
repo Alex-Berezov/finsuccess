@@ -46,7 +46,7 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
         </tbody>
       </table>
       <Modal active={addOperationModalActive} setActive={setAddOperationModalActive}>
-        <AddOperationForm />
+        <AddOperationForm setActive={setAddOperationModalActive} />
       </Modal>
     </div>
   );

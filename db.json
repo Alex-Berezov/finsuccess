@@ -63,6 +63,13 @@
       "value": 10000,
       "itemName": "Freelance",
       "comment": "Правки по магазу"
+    },
+    {
+      "id": "d5e8d661-14bc-4cef-bfe0-83e5db304f8a",
+      "date": "09.05.2022",
+      "value": 14285,
+      "itemName": "Кредит",
+      "comment": "Qwerty"
     }
   ]
 }

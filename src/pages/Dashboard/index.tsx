@@ -9,7 +9,6 @@ import { selectIncomes } from './../../redux/redusers/incomes/selectors';
 import ExpenseEditableTable from './../../components/DashboardEditableTables/ExpensesEditableTable/index';
 import { selectExpenses } from './../../redux/redusers/expenses/selectors';
 import { ExpensesActionType } from '../../Types/ExpensesTypes';
-import { IBalance } from './../../Types/Types';
 import { selectOperations } from './../../redux/redusers/operations/selectors';
 import { OperationsActionType } from '../../Types/OperationsTypes';
 import OperationsBlock from './../../components/OperationsBlock/index';
