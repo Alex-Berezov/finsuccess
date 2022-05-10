@@ -5,10 +5,26 @@ table, th, td {
 }
 
 .operations__block {
-  margin-top: 100px;
+  margin: 100px 0;
 
-  .addOperationBtn {
+  &-addOperationBtn {
     margin-bottom: 30px;
     cursor: pointer;
+  }
+
+  table {
+    tr {
+      cursor: pointer;
+    }
+  }
+
+  &-delete {
+    text-align: center;
+    
+    img {
+      cursor: pointer;
+      max-width: 20px;
+      max-height: 20px;
+    }
   }
 }
