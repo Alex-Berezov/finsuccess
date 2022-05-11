@@ -1,0 +1,21 @@
+table, th, td {
+  padding: 5px;
+  border: 1px solid gray;
+  border-collapse: collapse;
+}
+
+table {
+    tr {
+      cursor: pointer;
+    }
+  }
+
+  .delete {
+    text-align: center;
+    
+    img {
+      cursor: pointer;
+      max-width: 20px;
+      max-height: 20px;
+    }
+  }

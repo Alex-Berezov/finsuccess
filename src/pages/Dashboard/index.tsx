@@ -28,7 +28,6 @@ const Dashboard: FC = () => {
 
   const incomeData = useSelector(selectIncomes).incomes
   const expensesData = useSelector(selectExpenses).expenses
-  const operationsData = useSelector(selectOperations).operations.sort(byField('date'))
 
   const balanceData = [
     { id: 'balance-data-incomse', name: 'Доходы', value: countArrayValues(incomeData) },
@@ -62,7 +61,7 @@ const Dashboard: FC = () => {
           <BalanceTable tableData={balanceData} tableTitle='Баланс' />
         </div>
       </div>
-      <OperationsBlock tableData={operationsData} />
+      <OperationsBlock />
       <Modal active={incomeModalActive} setActive={setIncomeModalActive}>
         <IncomeEditableTable />
       </Modal>

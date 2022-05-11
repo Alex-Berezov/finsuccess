@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { IOperations } from '../../Types/Types'
-import { getFinFormat } from './../../utils/index'
+import { byField } from './../../utils/index'
 import Modal from './../Modal/index'
 import AddOperationForm from './../AddOperationForm/index'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,24 +9,22 @@ import { selectExpenses } from './../../redux/redusers/expenses/selectors'
 import { OperationsActionType } from '../../Types/OperationsTypes'
 import { v4 as uuidv4 } from 'uuid'
 import useInput from './../../hooks/useInput'
+import { selectOperations } from './../../redux/redusers/operations/selectors'
+import OperationBlockTable from './../OperationBlockTable/index'
 
-
-import garbage from '../../assets/img/garbage.svg'
 import './styles.scss'
 
-interface OperationsBlockProps {
-  tableData: Array<IOperations>
-}
-
-const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
+const OperationsBlock: FC = () => {
   const [addOperationModalActive, setAddOperationModalActive] = useState<boolean>(false)
   const [isUpdatingOperation, setIsUpdatingOperation] = useState<boolean>(false)
+  const [updatingOperationId, setUpdatingOperationId] = useState<string>('')
   const [startDate, setStartDate] = useState<Date>(new Date())
   const [selectValue, setSelectValue] = useState<string>('')
   const dispatch = useDispatch()
 
   const incomeData = useSelector(selectIncomes).incomes
   const expensesData = useSelector(selectExpenses).expenses
+  const operationsData = useSelector(selectOperations).operations.sort(byField('date'))
 
   const itemNames: Array<string> = ['Выберете статью']
   for (let elem of [...incomeData, ...expensesData]) {
@@ -43,6 +41,12 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
     operationId
   })
 
+  const updateOperation = (operationId: string, editedOperation: IOperations) => dispatch({
+    type: OperationsActionType.UPDATE_OPERATION,
+    operationId,
+    editedOperation
+  })
+
   const hendleDeleteOperation = (e: React.MouseEvent<HTMLImageElement>, operationId: string) => {
     e.stopPropagation()
     deleteOperation(operationId)
@@ -54,21 +58,6 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
   const selectedDay = `${startDate.getDate() <= 9 ? `0${startDate.getDate()}` : startDate.getDate()}`
   const selectedMonth = `${startDate.getMonth() <= 8 ? `0${startDate.getMonth() + 1}` : startDate.getMonth() + 1}`
   const selectedYear = `${startDate.getFullYear()}`
-
-  const handleSeveOperation = () => {
-    addOperation(
-      {
-        id: uuidv4(),
-        date: `${selectedDay}.${selectedMonth}.${selectedYear}`,
-        value: +amountInput.value,
-        itemName: selectValue,
-        comment: commentInput.value
-      }
-    )
-    amountInput.setValue('')
-    commentInput.setValue('')
-    setAddOperationModalActive(false)
-  }
 
   const handleItemSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectValue(e.target.value)
@@ -85,13 +74,43 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
 
   const handleSelectedOperation = (operationId: string) => {
     setIsUpdatingOperation(true)
-    const selectedOperation = tableData.filter(elem => elem.id === operationId)[0]
+    const selectedOperation = operationsData.filter((elem: IOperations) => elem.id === operationId)[0]
     amountInput.setValue(`${selectedOperation.value}`)
     commentInput.setValue(`${selectedOperation.comment}`)
     const selectedDate = selectedOperation.date.split('.').reverse().join('-')
     setStartDate(new Date(selectedDate))
     setSelectValue(selectedOperation.itemName)
     setAddOperationModalActive(true)
+    setUpdatingOperationId(operationId)
+  }
+
+  const handleAddOperation = () => {
+    addOperation(
+      {
+        id: uuidv4(),
+        date: `${selectedDay}.${selectedMonth}.${selectedYear}`,
+        value: +amountInput.value,
+        itemName: selectValue,
+        comment: commentInput.value
+      }
+    )
+    amountInput.setValue('')
+    commentInput.setValue('')
+    setAddOperationModalActive(false)
+  }
+
+  const handleSeveOperation = () => {
+    updateOperation(
+      updatingOperationId,
+      {
+        id: updatingOperationId,
+        date: `${selectedDay}.${selectedMonth}.${selectedYear}`,
+        value: +amountInput.value,
+        itemName: selectValue,
+        comment: commentInput.value
+      }
+    )
+    setAddOperationModalActive(false)
   }
 
   return (
@@ -102,33 +121,11 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
       >
         Добавить операцию
       </button>
-      <table>
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Сумма</th>
-            <th>Статья</th>
-            <th colSpan={2}>Комментарий</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            tableData.map((item) => {
-              return (
-                <tr key={item.id} onClick={() => handleSelectedOperation(item.id)}>
-                  <td>{item.date}</td>
-                  <td>{getFinFormat(item.value)}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.comment}</td>
-                  <td className='operations__block-delete'>
-                    <img src={garbage} alt="Delete" onClick={(e) => hendleDeleteOperation(e, item.id)} />
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
+      <OperationBlockTable
+        operationsData={operationsData}
+        handleSelectedOperation={handleSelectedOperation}
+        hendleDeleteOperation={hendleDeleteOperation}
+      />
       <Modal active={addOperationModalActive} setActive={setAddOperationModalActive}>
         <AddOperationForm
           isUpdatingOperation={isUpdatingOperation}
@@ -137,9 +134,10 @@ const OperationsBlock: FC<OperationsBlockProps> = ({ tableData }) => {
           setStartDate={setStartDate}
           amountInput={amountInput}
           commentInput={commentInput}
-          handleSeveOperation={handleSeveOperation}
+          handleAddOperation={handleAddOperation}
           selectValue={selectValue}
           handleItemSelect={handleItemSelect}
+          handleSeveOperation={handleSeveOperation}
         />
       </Modal>
     </div>

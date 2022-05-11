@@ -31,10 +31,10 @@
   "operations": [
     {
       "id": "operations-start-data-0",
-      "date": "06.05.2022",
-      "value": 150000,
+      "date": "10.05.2022",
+      "value": 140000,
       "itemName": "Зарплата",
-      "comment": ""
+      "comment": "Coding"
     },
     {
       "id": "operations-start-data-1",

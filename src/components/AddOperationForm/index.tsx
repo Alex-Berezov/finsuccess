@@ -1,10 +1,9 @@
 import React, { FC, useId, useState } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { IOperations } from '../../Types/Types';
+import { getFinFormat } from './../../utils/index'
 
 import './styles.scss'
-
 interface AddOperationFormProps {
   isUpdatingOperation: boolean
   itemNames: Array<string>
@@ -12,6 +11,7 @@ interface AddOperationFormProps {
   setStartDate: (date: Date) => void
   amountInput: any
   commentInput: any
+  handleAddOperation: () => void
   handleSeveOperation: () => void
   selectValue: string
   handleItemSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void
@@ -20,7 +20,7 @@ interface AddOperationFormProps {
 const AddOperationForm: FC<AddOperationFormProps> = (
   {
     isUpdatingOperation, itemNames, startDate, setStartDate, handleItemSelect,
-    amountInput, commentInput, handleSeveOperation, selectValue
+    amountInput, commentInput, handleAddOperation, handleSeveOperation, selectValue
   }
 ) => {
 
@@ -61,7 +61,11 @@ const AddOperationForm: FC<AddOperationFormProps> = (
           onBlur={commentInput.onBlur}
         />
       </div>
-      <button type='button' onClick={handleSeveOperation}>Сохранить</button>
+      {
+        isUpdatingOperation
+          ? <button type='button' onClick={handleSeveOperation}>Сохранить</button>
+          : <button type='button' onClick={handleAddOperation}>Добавить</button>
+      }
     </div>
   );
 };
