@@ -13,5 +13,8 @@ export const expensesAPI = {
   },
   updateExpense(expenseId: string, expenseName: string) {
     return instance.patch<IBalance[]>(`expenses/${expenseId}`, { "name": expenseName })
+  },
+  updateExpenseValue(expenseId: string, expenseValue: number) {
+    return instance.patch<IBalance[]>(`expenses/${expenseId}`, { "value": expenseValue })
   }
 }

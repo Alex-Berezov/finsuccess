@@ -12,7 +12,6 @@ export const operationsAPI = {
     return instance.delete<IOperations[]>(`operations/${operationId}`)
   },
   updateOperation(operationId: string, editedOperation: IOperations) {
-    //???? PUT or PATCH or POST ????
     return instance.put<IOperations[]>(`operations/${operationId}`, { ...editedOperation })
   }
 }

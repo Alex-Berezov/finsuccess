@@ -56,6 +56,15 @@ export function* UpdateExpense(payload: UpdateExpenseTypes) {
   }
 }
 
+export function* UpdateExpenseValue(expenseId: string, expenseValue: number) {
+  try {
+    yield call(() => expensesAPI.updateExpenseValue(expenseId, expenseValue))
+    yield FetchExpensesList()
+  } catch (error) {
+    yield put({ type: ExpensesActionType.EXPENSES_FAILURE, payload: error })
+  }
+}
+
 export default function* expensesSaga() {
   yield takeEvery(ExpensesActionType.FETCH_EXPENSES, FetchExpensesList)
   yield takeEvery(ExpensesActionType.ADD_EXPENSE, AddExpense)

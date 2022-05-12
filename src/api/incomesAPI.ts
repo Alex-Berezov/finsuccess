@@ -13,5 +13,8 @@ export const incomesAPI = {
   },
   updateIncome(incomeId: string, incomeName: string) {
     return instance.patch<IBalance[]>(`incomes/${incomeId}`, { "name": incomeName })
+  },
+  updateIncomeValue(incomeId: string, incomeValue: number) {
+    return instance.patch<IBalance[]>(`incomes/${incomeId}`, { "value": incomeValue })
   }
 }

@@ -56,6 +56,15 @@ export function* UpdateIncome(payload: UpdateIncomeTypes) {
   }
 }
 
+export function* UpdateIncomeValue(incomeId: string, incomeValue: number) {
+  try {
+    yield call(() => incomesAPI.updateIncomeValue(incomeId, incomeValue))
+    yield FetchIncomesList()
+  } catch (error) {
+    yield put({ type: IncomesActionType.INCOMES_FAILURE, payload: error })
+  }
+}
+
 export default function* incomesSaga() {
   yield takeEvery(IncomesActionType.FETCH_INCOMES, FetchIncomesList)
   yield takeEvery(IncomesActionType.ADD_INCOME, AddIncome)
