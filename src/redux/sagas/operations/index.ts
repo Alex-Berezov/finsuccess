@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import { operationsAPI } from "../../../api/operationsAPI";
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { OperationsActionType } from "../../../Types/OperationsTypes";
-import { BalanceRecalculation } from "../balanceRecalculation";
+import { AddOperationBalanceRecalculation, DeleteOperationBalanceRecalculation } from "../balanceRecalculation";
 
 
 interface AddOperationTypes {
@@ -34,7 +34,7 @@ export function* FetchOperationsList() {
 export function* AddOperation(payload: AddOperationTypes) {
   try {
     yield call(() => operationsAPI.postOperation({ ...payload.newOperation }))
-    yield BalanceRecalculation(payload)
+    yield AddOperationBalanceRecalculation(payload)
     yield FetchOperationsList()
   } catch (error) {
     yield put({ type: OperationsActionType.OPERATIONS_FAILURE, payload: error })
@@ -43,6 +43,7 @@ export function* AddOperation(payload: AddOperationTypes) {
 
 export function* DeleteOperation(payload: DeleteOperationTypes) {
   try {
+    yield DeleteOperationBalanceRecalculation(payload)
     yield call(() => operationsAPI.deleteOperation(payload.operationId))
     yield FetchOperationsList()
   } catch (error) {

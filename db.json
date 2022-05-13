@@ -3,59 +3,30 @@
     {
       "id": "incomes-start-data-0",
       "name": "Зарплата",
-      "value": 20
+      "value": 0
     },
     {
       "id": "incomes-start-data-1",
       "name": "Freelance",
-      "value": 20
+      "value": 0
     }
   ],
   "expenses": [
     {
       "id": "expenses-start-data-0",
       "name": "Аренда квартиры",
-      "value": 10
+      "value": 0
     },
     {
       "id": "expenses-start-data-1",
       "name": "Комуналка",
-      "value": 10
+      "value": 0
     },
     {
       "id": "6d2547de-b622-448c-87e2-3be8f7d27d5b",
       "name": "Кредит",
-      "value": 10
+      "value": 0
     }
   ],
-  "operations": [
-    {
-      "id": "dde4d3b3-38d3-430e-ac46-0e7169e55ff9",
-      "date": "13.05.2022",
-      "value": 5,
-      "itemName": "Комуналка",
-      "comment": ""
-    },
-    {
-      "id": "0a3d7f13-e8e7-44d8-9f0a-763f56afe837",
-      "date": "13.05.2022",
-      "value": 5,
-      "itemName": "Кредит",
-      "comment": ""
-    },
-    {
-      "id": "567be661-a813-4218-9383-38e485bc8413",
-      "date": "13.05.2022",
-      "value": 5,
-      "itemName": "Аренда квартиры",
-      "comment": ""
-    },
-    {
-      "id": "8ccd33fd-9a95-41c7-8485-996b95c85ed1",
-      "date": "13.05.2022",
-      "value": 5,
-      "itemName": "Кредит",
-      "comment": ""
-    }
-  ]
+  "operations": []
 }

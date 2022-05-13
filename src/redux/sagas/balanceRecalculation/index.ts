@@ -7,35 +7,73 @@ import { OperationsActionType } from '../../../Types/OperationsTypes';
 import { UpdateIncomeValue } from '../incomes';
 import { UpdateExpenseValue } from '../expenses';
 import { useState } from 'react';
+import { operationsAPI } from './../../../api/operationsAPI';
 
-interface BalanceRecalculationTypes {
+interface AddOperationBalanceRecalculationTypes {
   newOperation: IOperations
   type: string
 }
 
-export function* BalanceRecalculation(payload: BalanceRecalculationTypes) {
+interface DeleteOperationBalanceRecalculationTypes {
+  operationId: string
+  type: string
+}
+
+export function* AddOperationBalanceRecalculation(payload: AddOperationBalanceRecalculationTypes) {
   try {
     const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
     const expensesResponse: AxiosResponse<IBalance[]> = yield call(expensesAPI.getExpenses)
-    const newOperation: IOperations = { ...payload.newOperation }
     const incomesArray: IBalance[] = Object.values(incomesResponse)
     const expensesArray: IBalance[] = Object.values(expensesResponse)
-    let operatinId: string = ''
+
+    const newOperation: IOperations = { ...payload.newOperation }
+    let operationId: string = ''
     let newValue: number = 0
 
     for (let item of incomesArray) {
-      if (item.name === newOperation.itemName) {
-        operatinId = item.id
+      if (newOperation.itemName === item.name) {
+        operationId = item.id
         newValue = item.value + newOperation.value
-        yield UpdateIncomeValue(operatinId, newValue)
+        yield UpdateIncomeValue(operationId, newValue)
       }
     }
 
     for (let item of expensesArray) {
       if (item.name === newOperation.itemName) {
-        operatinId = item.id
+        operationId = item.id
         newValue = item.value + newOperation.value
-        yield UpdateExpenseValue(operatinId, newValue)
+        yield UpdateExpenseValue(operationId, newValue)
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* DeleteOperationBalanceRecalculation(payload: DeleteOperationBalanceRecalculationTypes) {
+  try {
+    const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
+    const expensesResponse: AxiosResponse<IBalance[]> = yield call(expensesAPI.getExpenses)
+    const incomesArray: IBalance[] = Object.values(incomesResponse)
+    const expensesArray: IBalance[] = Object.values(expensesResponse)
+
+    const operationsResponse: AxiosResponse<IOperations[]> = yield call(operationsAPI.getOperations)
+    const operationsArray: IOperations[] = Object.values(operationsResponse)
+    const deletedOperation = operationsArray.filter(item => item.id === payload.operationId)[0]
+
+    let newValue: number = 0
+
+    for (let item of incomesArray) {
+      if (item.name === deletedOperation.itemName) {
+        newValue = item.value - deletedOperation.value
+        yield UpdateIncomeValue(item.id, newValue)
+      }
+    }
+
+    for (let item of expensesArray) {
+      if (item.name === deletedOperation.itemName) {
+        newValue = item.value - deletedOperation.value
+        yield UpdateExpenseValue(item.id, newValue)
       }
     }
   } catch (error) {
@@ -44,5 +82,6 @@ export function* BalanceRecalculation(payload: BalanceRecalculationTypes) {
 }
 
 export default function* balanceRecalculationSaga() {
-  yield takeEvery(OperationsActionType.ADD_OPERATION, BalanceRecalculation)
+  yield takeEvery(OperationsActionType.ADD_OPERATION, AddOperationBalanceRecalculation)
+  yield takeEvery(OperationsActionType.DELETE_OPERATION, DeleteOperationBalanceRecalculation)
 }
