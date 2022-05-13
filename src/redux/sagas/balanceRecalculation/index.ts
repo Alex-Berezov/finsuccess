@@ -6,6 +6,7 @@ import { expensesAPI } from './../../../api/expensesAPI';
 import { OperationsActionType } from '../../../Types/OperationsTypes';
 import { UpdateIncomeValue } from '../incomes';
 import { UpdateExpenseValue } from '../expenses';
+import { useState } from 'react';
 
 interface BalanceRecalculationTypes {
   newOperation: IOperations
@@ -16,16 +17,17 @@ export function* BalanceRecalculation(payload: BalanceRecalculationTypes) {
   try {
     const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
     const expensesResponse: AxiosResponse<IBalance[]> = yield call(expensesAPI.getExpenses)
-    const newOperation = { ...payload.newOperation }
-    const incomesArray = Object.values(incomesResponse)
-    const expensesArray = Object.values(expensesResponse)
-    let operatinId = ''
-    let newValue = 0
+    const newOperation: IOperations = { ...payload.newOperation }
+    const incomesArray: IBalance[] = Object.values(incomesResponse)
+    const expensesArray: IBalance[] = Object.values(expensesResponse)
+    let operatinId: string = ''
+    let newValue: number = 0
 
     for (let item of incomesArray) {
       if (item.name === newOperation.itemName) {
         operatinId = item.id
         newValue = item.value + newOperation.value
+        yield UpdateIncomeValue(operatinId, newValue)
       }
     }
 
@@ -33,19 +35,9 @@ export function* BalanceRecalculation(payload: BalanceRecalculationTypes) {
       if (item.name === newOperation.itemName) {
         operatinId = item.id
         newValue = item.value + newOperation.value
+        yield UpdateExpenseValue(operatinId, newValue)
       }
     }
-
-    console.log('====================================');
-    console.log('operatinId >>', operatinId);
-    console.log('====================================');
-
-    console.log('====================================');
-    console.log('newValue >>', newValue);
-    console.log('====================================');
-
-    yield UpdateIncomeValue(operatinId, newValue)
-    yield UpdateExpenseValue(operatinId, newValue)
   } catch (error) {
     console.log(error)
   }
