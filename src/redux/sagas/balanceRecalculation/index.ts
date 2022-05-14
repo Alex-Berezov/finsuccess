@@ -6,7 +6,6 @@ import { expensesAPI } from './../../../api/expensesAPI';
 import { OperationsActionType } from '../../../Types/OperationsTypes';
 import { UpdateIncomeValue } from '../incomes';
 import { UpdateExpenseValue } from '../expenses';
-import { useState } from 'react';
 import { operationsAPI } from './../../../api/operationsAPI';
 
 interface AddOperationBalanceRecalculationTypes {
@@ -25,12 +24,25 @@ interface UpdateOperationBalanceRecalculationTypes {
   type: string
 }
 
-export function* AddOperationBalanceRecalculation(payload: AddOperationBalanceRecalculationTypes) {
+function* GetDataForRecalculation() {
   try {
     const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
     const expensesResponse: AxiosResponse<IBalance[]> = yield call(expensesAPI.getExpenses)
     const incomesArray: IBalance[] = Object.values(incomesResponse)
     const expensesArray: IBalance[] = Object.values(expensesResponse)
+
+    const operationsResponse: AxiosResponse<IOperations[]> = yield call(operationsAPI.getOperations)
+    const operationsArray: IOperations[] = Object.values(operationsResponse)
+
+    return [incomesArray, expensesArray, operationsArray]
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* AddOperationBalanceRecalculation(payload: AddOperationBalanceRecalculationTypes) {
+  try {
+    const [incomesArray, expensesArray]: Array<any> = yield GetDataForRecalculation()
 
     const newOperation: IOperations = { ...payload.newOperation }
     let operationId: string = ''
@@ -58,15 +70,8 @@ export function* AddOperationBalanceRecalculation(payload: AddOperationBalanceRe
 
 export function* DeleteOperationBalanceRecalculation(payload: DeleteOperationBalanceRecalculationTypes) {
   try {
-    const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
-    const expensesResponse: AxiosResponse<IBalance[]> = yield call(expensesAPI.getExpenses)
-    const incomesArray: IBalance[] = Object.values(incomesResponse)
-    const expensesArray: IBalance[] = Object.values(expensesResponse)
-
-    const operationsResponse: AxiosResponse<IOperations[]> = yield call(operationsAPI.getOperations)
-    const operationsArray: IOperations[] = Object.values(operationsResponse)
-    const deletedOperation = operationsArray.filter(item => item.id === payload.operationId)[0]
-
+    const [incomesArray, expensesArray, operationsArray]: Array<any> = yield GetDataForRecalculation()
+    const deletedOperation = operationsArray.filter((item: IOperations) => item.id === payload.operationId)[0]
     let newValue: number = 0
 
     for (let item of incomesArray) {

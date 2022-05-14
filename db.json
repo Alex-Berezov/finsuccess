@@ -3,7 +3,7 @@
     {
       "id": "incomes-start-data-0",
       "name": "Зарплата",
-      "value": 10000
+      "value": 11000
     },
     {
       "id": "incomes-start-data-1",
@@ -60,7 +60,14 @@
     {
       "id": "235c619a-d927-4336-888a-76e3f1d982d0",
       "date": "13.05.2022",
-      "value": 10000,
+      "value": 9500,
+      "itemName": "Зарплата",
+      "comment": ""
+    },
+    {
+      "id": "34669f1b-a585-4b89-8b01-ef404b0f2001",
+      "date": "14.05.2022",
+      "value": 1500,
       "itemName": "Зарплата",
       "comment": ""
     }
