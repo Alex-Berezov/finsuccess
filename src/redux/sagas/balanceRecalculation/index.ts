@@ -19,6 +19,12 @@ interface DeleteOperationBalanceRecalculationTypes {
   type: string
 }
 
+interface UpdateOperationBalanceRecalculationTypes {
+  operationId: string
+  editedOperation: IOperations
+  type: string
+}
+
 export function* AddOperationBalanceRecalculation(payload: AddOperationBalanceRecalculationTypes) {
   try {
     const incomesResponse: AxiosResponse<IBalance[]> = yield call(incomesAPI.getIncomes)
@@ -81,7 +87,20 @@ export function* DeleteOperationBalanceRecalculation(payload: DeleteOperationBal
   }
 }
 
+export function* UpdateOperationBalanceRecalculation(payload: UpdateOperationBalanceRecalculationTypes) {
+  try {
+    const deletePayload = { operationId: payload.operationId, type: OperationsActionType.DELETE_OPERATION }
+    const addPayload = { newOperation: payload.editedOperation, type: OperationsActionType.ADD_OPERATION }
+
+    yield DeleteOperationBalanceRecalculation(deletePayload)
+    yield AddOperationBalanceRecalculation(addPayload)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default function* balanceRecalculationSaga() {
   yield takeEvery(OperationsActionType.ADD_OPERATION, AddOperationBalanceRecalculation)
   yield takeEvery(OperationsActionType.DELETE_OPERATION, DeleteOperationBalanceRecalculation)
+  yield takeEvery(OperationsActionType.UPDATE_OPERATION, UpdateOperationBalanceRecalculation)
 }
