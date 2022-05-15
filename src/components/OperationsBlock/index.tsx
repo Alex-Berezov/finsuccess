@@ -53,7 +53,7 @@ const OperationsBlock: FC = () => {
   }
 
   const amountInput = useInput('', { isEmpty: true })
-  const commentInput = useInput('', { isEmpty: true, maxLength: 22 })
+  const commentInput = useInput('', { maxLength: 42 })
 
   const selectedDay = `${startDate.getDate() <= 9 ? `0${startDate.getDate()}` : startDate.getDate()}`
   const selectedMonth = `${startDate.getMonth() <= 8 ? `0${startDate.getMonth() + 1}` : startDate.getMonth() + 1}`
@@ -128,6 +128,7 @@ const OperationsBlock: FC = () => {
       />
       <Modal active={addOperationModalActive} setActive={setAddOperationModalActive}>
         <AddOperationForm
+          addOperationModalActive={addOperationModalActive}
           isUpdatingOperation={isUpdatingOperation}
           itemNames={itemNames}
           startDate={startDate}

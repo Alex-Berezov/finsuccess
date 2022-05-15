@@ -14,6 +14,8 @@ interface OperationBlockTableProps {
 const OperationBlockTable: FC<OperationBlockTableProps> = (
   { operationsData, handleSelectedOperation, hendleDeleteOperation }
 ) => {
+  const defaultOption = 'Выберете статью'
+
   return (
     <table>
       <thead>
@@ -31,7 +33,7 @@ const OperationBlockTable: FC<OperationBlockTableProps> = (
               <tr key={item.id} onClick={() => handleSelectedOperation(item.id)}>
                 <td>{item.date}</td>
                 <td>{getFinFormat(item.value)}</td>
-                <td>{item.itemName}</td>
+                <td className={item.itemName === defaultOption ? 'red' : ''}>{item.itemName}</td>
                 <td>{item.comment}</td>
                 <td className='delete'>
                   <img src={garbage} alt="Delete" onClick={(e) => hendleDeleteOperation(e, item.id)} />

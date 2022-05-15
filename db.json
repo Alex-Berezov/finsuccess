@@ -3,12 +3,12 @@
     {
       "id": "incomes-start-data-0",
       "name": "Зарплата",
-      "value": 11000
+      "value": 2000
     },
     {
       "id": "incomes-start-data-1",
       "name": "Freelance",
-      "value": 1500
+      "value": 0
     }
   ],
   "expenses": [
@@ -20,55 +20,29 @@
     {
       "id": "expenses-start-data-1",
       "name": "Комуналка",
-      "value": 700
-    },
-    {
-      "id": "6d2547de-b622-448c-87e2-3be8f7d27d5b",
-      "name": "Кредит",
-      "value": 200
+      "value": 1220
     }
   ],
   "operations": [
     {
-      "id": "8a26dbe5-9887-4ec4-875b-7d6097a36ba2",
-      "date": "14.05.2022",
-      "value": 1500,
-      "itemName": "Freelance",
+      "id": "24b152ba-0109-4961-9d8f-75188d7d0953",
+      "date": "15.05.2022",
+      "value": 2000,
+      "itemName": "Зарплата",
       "comment": ""
     },
     {
-      "id": "c540a94a-2d1c-4d7b-8f82-ff9588d8de87",
-      "date": "14.05.2022",
+      "id": "d1cbd4c7-5155-4b2b-9b49-5000887234b7",
+      "date": "15.05.2022",
       "value": 1000,
       "itemName": "Аренда квартиры",
       "comment": ""
     },
     {
-      "id": "54197069-50d8-4ef7-ac23-7e49d913ef92",
-      "date": "14.05.2022",
-      "value": 700,
+      "id": "46862a50-f0a4-4b92-95bb-489ad2f11f98",
+      "date": "15.05.2022",
+      "value": 1220,
       "itemName": "Комуналка",
-      "comment": ""
-    },
-    {
-      "id": "605f867b-4b91-4879-a75b-d8ad10713fb3",
-      "date": "14.05.2022",
-      "value": 100,
-      "itemName": "Кредит",
-      "comment": ""
-    },
-    {
-      "id": "235c619a-d927-4336-888a-76e3f1d982d0",
-      "date": "13.05.2022",
-      "value": 9500,
-      "itemName": "Зарплата",
-      "comment": ""
-    },
-    {
-      "id": "34669f1b-a585-4b89-8b01-ef404b0f2001",
-      "date": "14.05.2022",
-      "value": 1500,
-      "itemName": "Зарплата",
       "comment": ""
     }
   ]

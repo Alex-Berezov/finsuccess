@@ -2,9 +2,12 @@ import React, { FC, useId, useState } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { getFinFormat } from './../../utils/index'
+import NotificationsList from './../NotificationsList/index'
+
 
 import './styles.scss'
 interface AddOperationFormProps {
+  addOperationModalActive: boolean
   isUpdatingOperation: boolean
   itemNames: Array<string>
   startDate: Date
@@ -19,10 +22,17 @@ interface AddOperationFormProps {
 
 const AddOperationForm: FC<AddOperationFormProps> = (
   {
-    isUpdatingOperation, itemNames, startDate, setStartDate, handleItemSelect,
+    addOperationModalActive, isUpdatingOperation, itemNames, startDate, setStartDate, handleItemSelect,
     amountInput, commentInput, handleAddOperation, handleSeveOperation, selectValue
   }
 ) => {
+  console.log('====================================');
+  console.log('amountInput >>', amountInput);
+  console.log('====================================');
+
+  console.log('====================================');
+  console.log('amountInput >>', amountInput.value);
+  console.log('====================================');
 
   return (
     <div className='AddOperationForm'>
@@ -43,6 +53,9 @@ const AddOperationForm: FC<AddOperationFormProps> = (
           onChange={amountInput.onChange}
           onBlur={amountInput.onBlur}
         />
+        {
+          <NotificationsList isEditingItem={addOperationModalActive} useInput={amountInput} />
+        }
       </div>
       <div className="AddOperationForm__item">
         <p>Статья</p>
@@ -63,8 +76,18 @@ const AddOperationForm: FC<AddOperationFormProps> = (
       </div>
       {
         isUpdatingOperation
-          ? <button type='button' onClick={handleSeveOperation}>Сохранить</button>
-          : <button type='button' onClick={handleAddOperation}>Добавить</button>
+          ? (<button
+            disabled={!amountInput.value && amountInput.errors ? true : false}
+            onClick={handleSeveOperation}
+          >
+            Сохранить
+          </button>)
+          : (<button
+            disabled={!amountInput.value && amountInput.errors ? true : false}
+            onClick={handleAddOperation}
+          >
+            Добавить
+          </button>)
       }
     </div>
   );

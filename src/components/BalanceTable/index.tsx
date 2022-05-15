@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { IBalance } from '../../Types/Types';
+import React, { FC } from 'react'
+import { IBalance } from '../../Types/Types'
+import { getFinFormat } from './../../utils/index'
 
 import './styles.scss'
-
 interface BalanceTableProps {
   tableData: Array<IBalance>
   tableTitle: string
@@ -22,7 +22,7 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
             return (
               <tr key={item.id}>
                 <td>{item.name}</td>
-                <td>{item.value}</td>
+                <td>{getFinFormat(item.value)}</td>
               </tr>
             )
           })
@@ -33,7 +33,7 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
           <th>Итого:</th>
           <td>
             {
-              tableData.reduce((sum, current) => sum + current.value, 0)
+              getFinFormat(tableData.reduce((sum, current) => sum + current.value, 0))
             }
           </td>
         </tr>
@@ -42,4 +42,4 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
   );
 };
 
-export default BalanceTable;
+export default BalanceTable
