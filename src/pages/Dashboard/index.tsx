@@ -34,7 +34,7 @@ const Dashboard: FC = () => {
   ]
 
   return (
-    <div className='dashboard'>
+    <div className='dashboard' data-testid="dashboard">
       <div className="balance__block">
         <div className="balance__block-item income">
           <BalanceTable tableData={incomeData} tableTitle='Доходы' />

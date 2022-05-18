@@ -3,7 +3,7 @@ import './styles.scss'
 
 const Header = () => {
   return (
-    <div className='header'>
+    <div className='header' data-testid="header">
       <p>Logo</p>
       <div className="nav">
         <p>Item 1</p>

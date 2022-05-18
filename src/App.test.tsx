@@ -36,8 +36,10 @@ export const renderWithRedux: RenderWithRedux = (
 describe('With React Testing Library', () => {
 
   it('renders App', () => {
-    renderWithRedux(<App />, {})
+    const { getByTestId } = renderWithRedux(<App />, {})
     screen.debug()
+    expect(getByTestId('header')).toBeInTheDocument()
+    expect(getByTestId('dashboard')).toBeInTheDocument()
   })
 })
 
