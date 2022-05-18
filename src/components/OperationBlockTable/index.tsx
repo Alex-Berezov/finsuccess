@@ -28,7 +28,7 @@ const OperationBlockTable: FC<OperationBlockTableProps> = (
       </thead>
       <tbody>
         {
-          operationsData.map((item: IOperations) => {
+          operationsData?.map((item: IOperations) => {
             return (
               <tr key={item.id} onClick={() => handleSelectedOperation(item.id)}>
                 <td>{item.date}</td>

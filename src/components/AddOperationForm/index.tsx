@@ -1,7 +1,6 @@
-import React, { FC, useId, useState } from 'react'
+import React, { FC } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { getFinFormat } from './../../utils/index'
 import NotificationsList from './../NotificationsList/index'
 
 
@@ -26,13 +25,6 @@ const AddOperationForm: FC<AddOperationFormProps> = (
     amountInput, commentInput, handleAddOperation, handleSeveOperation, selectValue
   }
 ) => {
-  console.log('====================================');
-  console.log('amountInput >>', amountInput);
-  console.log('====================================');
-
-  console.log('====================================');
-  console.log('amountInput >>', amountInput.value);
-  console.log('====================================');
 
   return (
     <div className='AddOperationForm'>
@@ -49,9 +41,9 @@ const AddOperationForm: FC<AddOperationFormProps> = (
         <p>Сумма</p>
         <input
           type="text"
-          value={amountInput.value}
-          onChange={amountInput.onChange}
-          onBlur={amountInput.onBlur}
+          value={amountInput?.value}
+          onChange={amountInput?.onChange}
+          onBlur={amountInput?.onBlur}
         />
         {
           <NotificationsList isEditingItem={addOperationModalActive} useInput={amountInput} />
@@ -77,13 +69,13 @@ const AddOperationForm: FC<AddOperationFormProps> = (
       {
         isUpdatingOperation
           ? (<button
-            disabled={!amountInput.value && amountInput.errors ? true : false}
+            disabled={!amountInput?.value && amountInput?.errors ? true : false}
             onClick={handleSeveOperation}
           >
             Сохранить
           </button>)
           : (<button
-            disabled={!amountInput.value && amountInput.errors ? true : false}
+            disabled={!amountInput?.value && amountInput?.errors ? true : false}
             onClick={handleAddOperation}
           >
             Добавить

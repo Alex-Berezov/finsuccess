@@ -18,7 +18,7 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
       </thead>
       <tbody>
         {
-          tableData.map((item) => {
+          tableData?.map((item) => {
             return (
               <tr key={item.id}>
                 <td>{item.name}</td>
@@ -33,7 +33,7 @@ const BalanceTable: FC<BalanceTableProps> = ({ tableData, tableTitle }) => {
           <th>Итого:</th>
           <td>
             {
-              getFinFormat(tableData.reduce((sum, current) => sum + current.value, 0))
+              getFinFormat(tableData?.reduce((sum, current) => sum + current.value, 0))
             }
           </td>
         </tr>

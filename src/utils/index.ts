@@ -5,7 +5,7 @@ export const getFinFormat = (amount: number) => {
 }
 
 export const countArrayValues = (array: Array<IBalance>) => {
-  return array.reduce((sum: number, current: IBalance) => sum + current.value, 0)
+  return array?.reduce((sum: number, current: IBalance) => sum + current.value, 0)
 }
 
 export const byField = (field: string | number) => {

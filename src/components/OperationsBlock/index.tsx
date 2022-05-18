@@ -22,9 +22,9 @@ const OperationsBlock: FC = () => {
   const [selectValue, setSelectValue] = useState<string>('')
   const dispatch = useDispatch()
 
-  const incomeData = useSelector(selectIncomes).incomes
-  const expensesData = useSelector(selectExpenses).expenses
-  const operationsData = useSelector(selectOperations).operations.sort(byField('date'))
+  const incomeData = useSelector(selectIncomes)?.incomes
+  const expensesData = useSelector(selectExpenses)?.expenses
+  const operationsData = useSelector(selectOperations)?.operations.sort(byField('date'))
 
   const itemNames: Array<string> = ['Выберете статью']
   for (let elem of [...incomeData, ...expensesData]) {
@@ -32,17 +32,17 @@ const OperationsBlock: FC = () => {
   }
 
   const addOperation = (newOperation: IOperations) => dispatch({
-    type: OperationsActionType.ADD_OPERATION,
+    type: OperationsActionType?.ADD_OPERATION,
     newOperation
   })
 
   const deleteOperation = (operationId: string) => dispatch({
-    type: OperationsActionType.DELETE_OPERATION,
+    type: OperationsActionType?.DELETE_OPERATION,
     operationId
   })
 
   const updateOperation = (operationId: string, editedOperation: IOperations) => dispatch({
-    type: OperationsActionType.UPDATE_OPERATION,
+    type: OperationsActionType?.UPDATE_OPERATION,
     operationId,
     editedOperation
   })
@@ -55,9 +55,9 @@ const OperationsBlock: FC = () => {
   const amountInput = useInput('', { isEmpty: true })
   const commentInput = useInput('', { maxLength: 42 })
 
-  const selectedDay = `${startDate.getDate() <= 9 ? `0${startDate.getDate()}` : startDate.getDate()}`
-  const selectedMonth = `${startDate.getMonth() <= 8 ? `0${startDate.getMonth() + 1}` : startDate.getMonth() + 1}`
-  const selectedYear = `${startDate.getFullYear()}`
+  const selectedDay = `${startDate?.getDate() <= 9 ? `0${startDate?.getDate()}` : startDate?.getDate()}`
+  const selectedMonth = `${startDate?.getMonth() <= 8 ? `0${startDate?.getMonth() + 1}` : startDate?.getMonth() + 1}`
+  const selectedYear = `${startDate?.getFullYear()}`
 
   const handleItemSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectValue(e.target.value)
@@ -65,8 +65,8 @@ const OperationsBlock: FC = () => {
 
   const handleAddingOperation = () => {
     setIsUpdatingOperation(false)
-    amountInput.setValue('')
-    commentInput.setValue('')
+    amountInput?.setValue('')
+    commentInput?.setValue('')
     setStartDate(new Date())
     setSelectValue(`${itemNames[0]}`)
     setAddOperationModalActive(true)
@@ -74,12 +74,12 @@ const OperationsBlock: FC = () => {
 
   const handleSelectedOperation = (operationId: string) => {
     setIsUpdatingOperation(true)
-    const selectedOperation = operationsData.filter((elem: IOperations) => elem.id === operationId)[0]
-    amountInput.setValue(`${selectedOperation.value}`)
-    commentInput.setValue(`${selectedOperation.comment}`)
-    const selectedDate = selectedOperation.date.split('.').reverse().join('-')
+    const selectedOperation = operationsData?.filter((elem: IOperations) => elem.id === operationId)[0]
+    amountInput?.setValue(`${selectedOperation.value}`)
+    commentInput?.setValue(`${selectedOperation.comment}`)
+    const selectedDate = selectedOperation?.date.split('.').reverse().join('-')
     setStartDate(new Date(selectedDate))
-    setSelectValue(selectedOperation.itemName)
+    setSelectValue(selectedOperation?.itemName)
     setAddOperationModalActive(true)
     setUpdatingOperationId(operationId)
   }
@@ -89,13 +89,13 @@ const OperationsBlock: FC = () => {
       {
         id: uuidv4(),
         date: `${selectedDay}.${selectedMonth}.${selectedYear}`,
-        value: +amountInput.value,
+        value: +amountInput?.value,
         itemName: selectValue,
-        comment: commentInput.value
+        comment: commentInput?.value
       }
     )
-    amountInput.setValue('')
-    commentInput.setValue('')
+    amountInput?.setValue('')
+    commentInput?.setValue('')
     setAddOperationModalActive(false)
   }
 
@@ -105,9 +105,9 @@ const OperationsBlock: FC = () => {
       {
         id: updatingOperationId,
         date: `${selectedDay}.${selectedMonth}.${selectedYear}`,
-        value: +amountInput.value,
+        value: +amountInput?.value,
         itemName: selectValue,
-        comment: commentInput.value
+        comment: commentInput?.value
       }
     )
     setAddOperationModalActive(false)

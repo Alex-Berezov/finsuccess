@@ -8,10 +8,10 @@ import { selectIncomes } from '../../../redux/redusers/incomes/selectors';
 const IncomeEditableTable: FC = () => {
   const dispatch = useDispatch()
 
-  const incomeData = useSelector(selectIncomes).incomes
+  const incomeData = useSelector(selectIncomes)?.incomes
 
   const addIncome = (newIncome: IBalance) => dispatch({
-    type: IncomesActionType.ADD_INCOME,
+    type: IncomesActionType?.ADD_INCOME,
     newIncome: newIncome
   })
 
@@ -21,7 +21,7 @@ const IncomeEditableTable: FC = () => {
   })
 
   const updateIncome = (incomeId: string, incomeName: string) => dispatch({
-    type: IncomesActionType.UPDATE_INCOME,
+    type: IncomesActionType?.UPDATE_INCOME,
     incomeId,
     incomeName
   })

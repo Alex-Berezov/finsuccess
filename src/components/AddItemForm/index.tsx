@@ -17,7 +17,7 @@ const AddItemForm: FC<AddItemFormProps> = ({ addItem, isAddingItem, setIsAddingI
   const addItemInput = useInput('', { isEmpty: true, maxLength: 22, uniqueValue: tableData })
 
   const handleSentItem = () => {
-    addItem({ id: uuidv4(), name: addItemInput.value, value: 0 })
+    addItem({ id: uuidv4(), name: addItemInput?.value, value: 0 })
     setIsAddingItem(false)
   }
 
@@ -32,18 +32,18 @@ const AddItemForm: FC<AddItemFormProps> = ({ addItem, isAddingItem, setIsAddingI
                   className='addFormItemValue'
                   type="text"
                   autoFocus
-                  value={addItemInput.value}
-                  onChange={addItemInput.onChange}
-                  onBlur={addItemInput.onBlur}
+                  value={addItemInput?.value}
+                  onChange={addItemInput?.onChange}
+                  onBlur={addItemInput?.onBlur}
                 />
                 {
                   <NotificationsList isEditingItem={isAddingItem} useInput={addItemInput} />
                 }
               </div>
               <button
-                className={addItemInput.errors ? 'okBtn disabled' : 'okBtn'}
+                className={addItemInput?.errors ? 'okBtn disabled' : 'okBtn'}
                 onClick={handleSentItem}
-                disabled={addItemInput.errors ? true : false}
+                disabled={addItemInput?.errors ? true : false}
               >
                 Ok
               </button>

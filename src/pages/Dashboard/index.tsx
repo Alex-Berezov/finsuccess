@@ -9,10 +9,9 @@ import { selectIncomes } from './../../redux/redusers/incomes/selectors';
 import ExpenseEditableTable from './../../components/DashboardEditableTables/ExpensesEditableTable/index';
 import { selectExpenses } from './../../redux/redusers/expenses/selectors';
 import { ExpensesActionType } from '../../Types/ExpensesTypes';
-import { selectOperations } from './../../redux/redusers/operations/selectors';
 import { OperationsActionType } from '../../Types/OperationsTypes';
 import OperationsBlock from './../../components/OperationsBlock/index';
-import { byField, countArrayValues } from './../../utils/index';
+import { countArrayValues } from './../../utils/index';
 
 import './styles.scss'
 
@@ -26,8 +25,8 @@ const Dashboard: FC = () => {
     action(OperationsActionType.FETCH_OPERATIONS)
   }, [])
 
-  const incomeData = useSelector(selectIncomes).incomes
-  const expensesData = useSelector(selectExpenses).expenses
+  const incomeData = useSelector(selectIncomes)?.incomes
+  const expensesData = useSelector(selectExpenses)?.expenses
 
   const balanceData = [
     { id: 'balance-data-incomse', name: 'Доходы', value: countArrayValues(incomeData) },

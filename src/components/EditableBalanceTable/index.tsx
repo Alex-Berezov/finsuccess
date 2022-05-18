@@ -26,14 +26,14 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
   }
 
   const handleEditingItem = (id: string, value: string) => {
-    editItemInput.setErrors('')
+    editItemInput?.setErrors('')
     setSelectedForEditItem(id)
     setIsEditingItem(true)
-    editItemInput.setValue(value)
+    editItemInput?.setValue(value)
   }
 
   const handleSentEditedItem = () => {
-    updateItem(selectedForEditItem, editItemInput.value)
+    updateItem(selectedForEditItem, editItemInput?.value)
     setIsEditingItem(false)
   }
 
@@ -42,7 +42,7 @@ const EditableBalanceTable: FC<EditableBalanceTableProps> = ({ tableData, addIte
       <h2>Редактировать статьи</h2>
       <div className="editableTable">
         {
-          tableData.map((item) => {
+          tableData?.map((item) => {
             return (
               <div className="editableTable__block" key={item.id}>
                 <div className="editableTable__block-item">

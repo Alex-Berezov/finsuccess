@@ -1,26 +1,43 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { ReactNode } from 'react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import App from './App';
 import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
+import rootReducer from './redux/redusers/index'
+import { Action, AnyAction, createStore, Store } from 'redux';
+
+const initialState: any = {}
+
+interface RenderWithRedux<
+  S = any,
+  A extends Action = AnyAction,
+  I extends S = any
+  > {
+  (
+    ui: ReactNode,
+    reduxOptions: {
+      store?: Store<S, A>
+      initialState?: I
+    }
+  ): RenderResult & {
+    store: Store<S, A>
+  }
+}
+export const renderWithRedux: RenderWithRedux = (
+  ui,
+  { store = createStore(rootReducer, initialState) } = {}
+) => {
+  return {
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
+  }
+}
 
 describe('With React Testing Library', () => {
-  const initialState = { output: 10 }
-  const mockStore = configureStore()
-  let store, wrapper
 
   it('renders App', () => {
-    store = mockStore(initialState)
-    const {getByText} = render(<Provider store={store}><App /></Provider>)
+    renderWithRedux(<App />, {})
     screen.debug()
-    // expect(getByText('Hello Worldd!')).not.toBeNull()
   })
 })
-// test('renders App', () => {
-  
-//   render(<App />)
-//   screen.debug()
-//   const linkElement = screen.getByText(/Доходы/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
 

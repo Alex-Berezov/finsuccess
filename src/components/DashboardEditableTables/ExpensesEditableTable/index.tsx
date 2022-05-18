@@ -8,20 +8,20 @@ import { ExpensesActionType } from '../../../Types/ExpensesTypes';
 const ExpenseEditableTable: FC = () => {
   const dispatch = useDispatch()
 
-  const expensesData = useSelector(selectExpenses).expenses
+  const expensesData = useSelector(selectExpenses)?.expenses
 
   const addExpense = (newExpense: IBalance) => dispatch({
-    type: ExpensesActionType.ADD_EXPENSE,
+    type: ExpensesActionType?.ADD_EXPENSE,
     newExpense: newExpense
   })
 
   const deleteExpense = (expenseId: string) => dispatch({
-    type: ExpensesActionType.DELETE_EXPENSE,
+    type: ExpensesActionType?.DELETE_EXPENSE,
     expenseId
   })
 
   const updateExpense = (expenseId: string, expenseName: string) => dispatch({
-    type: ExpensesActionType.UPDATE_EXPENSE,
+    type: ExpensesActionType?.UPDATE_EXPENSE,
     expenseId,
     expenseName
   })
