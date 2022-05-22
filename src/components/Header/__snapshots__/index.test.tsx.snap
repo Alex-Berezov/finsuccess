@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header tests Test Header is mounted 1`] = `
+<div
+  class="header"
+  data-testid="header"
+>
+  <p
+    data-testid="logo"
+  >
+    Logo
+  </p>
+  <div
+    class="nav"
+    data-testid="nav"
+  >
+    <p>
+      Item 1
+    </p>
+    <p>
+      Item 1
+    </p>
+    <p>
+      Item 1
+    </p>
+  </div>
+</div>
+`;
