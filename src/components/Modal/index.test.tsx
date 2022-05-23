@@ -1,5 +1,6 @@
 import Modal from './index';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 
 const ComponentForTest = () => {
   return (
@@ -8,34 +9,35 @@ const ComponentForTest = () => {
 }
 
 describe('Test for modal component', () => {
+  const toggleModal = jest.fn()
 
   it('Render modal without component', () => {
-    const ModalWithoutComponent = render(<Modal active={false} setActive={function (bool: boolean): void {
-      throw new Error('Function not implemented.');
-    }} children={undefined} />)
+    const ModalWithoutComponent = render(
+      <Modal active={false} setActive={toggleModal} children={undefined} />
+    )
     expect(ModalWithoutComponent).toMatchSnapshot();
   })
 
   it('Render modal with component', () => {
-    const ModalWithComponent = render(<Modal active={true} setActive={function (bool: boolean): void {
-      throw new Error('Function not implemented.');
-    }} children={<ComponentForTest />} />)
+    const ModalWithComponent = render(
+      <Modal active={true} setActive={toggleModal} children={<ComponentForTest />} />
+    )
     expect(ModalWithComponent).toMatchSnapshot();
   })
 
   it('Check has class active', () => {
-    const { container } = render(<Modal active={true} setActive={function (bool: boolean): void {
-      throw new Error('Function not implemented.');
-    }} children={<ComponentForTest />} />)
+    const { container } = render(
+      <Modal active={true} setActive={toggleModal} children={<ComponentForTest />} />
+    )
     expect(container.firstChild).toHaveClass('active')
   })
 
   it('Close modal test', () => {
-    let modalIsActive = true
-    const closeModal = () => modalIsActive = false
-    const { container } = render(
-      <Modal active={modalIsActive} setActive={closeModal} children={<ComponentForTest />} />
+    const { getByTestId, queryByTestId } = render(
+      <Modal active={true} setActive={toggleModal} children={<ComponentForTest />} />
     )
-    expect(container.firstChild).not.toHaveClass('active')
+    userEvent.click(getByTestId('modal'))
+    expect(toggleModal).toHaveBeenCalledTimes(1)
+    expect(queryByTestId('modal')).not.toHaveClass('active', { exact: true })
   })
 })
